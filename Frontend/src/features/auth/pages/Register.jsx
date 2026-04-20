@@ -26,6 +26,11 @@ const Register = () => {
 
     return (
         <main className="register-page">
+             <div className="logo-container">
+            <div className="logo-icon">🎵</div>
+            <h1 className="app-name">Moodify</h1>
+            <p className="tagline">Music That Feels You</p>
+        </div>
             <div className="form-container">
                 <h1>Register</h1>
                 <form onSubmit={handleSubmit} >

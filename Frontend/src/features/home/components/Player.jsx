@@ -15,6 +15,9 @@ const formatTime = (seconds) => {
 const Player = () => {
     const { song } = useSong()
 
+// 🔥 array se current song nikalo
+const currentSong = song?.[0]
+
     const audioRef = useRef(null)
     const progressRef = useRef(null)
 
@@ -27,13 +30,15 @@ const Player = () => {
     const [isMuted, setIsMuted] = useState(false)
 
     // Reset player when song changes
-    useEffect(() => {
-        if (audioRef.current) {
-            audioRef.current.load()
-            setIsPlaying(false)
-            setCurrentTime(0)
-        }
-    }, [song?.url])
+   useEffect(() => {
+    if (audioRef.current && currentSong?.url) {
+        audioRef.current.load()
+        audioRef.current.play()
+        setIsPlaying(true)
+        setCurrentTime(0)
+    }
+}, [currentSong?.url])
+
 
     const togglePlay = () => {
         const audio = audioRef.current
@@ -100,13 +105,14 @@ const Player = () => {
 
     const progress = duration ? (currentTime / duration) * 100 : 0
 
-    if (!song) return null
+      if (!currentSong) return null
 
-    return (
+       return (
         <div className="player">
             <audio
                 ref={audioRef}
-                src={song.url}
+                src={currentSong?.url}
+
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedMetadata={handleLoadedMetadata}
                 onEnded={handleSongEnd}
@@ -115,13 +121,15 @@ const Player = () => {
             {/* Poster + Info */}
             <div className="player__info">
                 <img
-                    className="player__poster"
-                    src={song.posterUrl}
-                    alt={song.title}
-                />
+                  className="player__poster"
+                    src={currentSong?.posterUrl}
+                    alt={currentSong?.title}
+/>
+
                 <div className="player__meta">
-                    <p className="player__title">{song.title}</p>
-                    <span className="player__mood">{song.mood}</span>
+                   <p className="player__title">{currentSong?.title}</p>
+                  <span className="player__mood">{currentSong?.mood}</span>
+
                 </div>
             </div>
 

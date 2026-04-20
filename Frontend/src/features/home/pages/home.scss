@@ -1,0 +1,260 @@
+.moodify-container {
+  min-height: 100vh;
+  background: #0a0a0c;
+  color: #fff;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+
+  // Background Glows
+  .glow-1 { position: absolute; top: -10%; left: -10%; width: 40%; height: 40%; background: radial-gradient(circle, rgba(59, 130, 246, 0.15), transparent); filter: blur(80px); }
+  .glow-2 { position: absolute; bottom: -10%; right: -10%; width: 40%; height: 40%; background: radial-gradient(circle, rgba(168, 85, 247, 0.15), transparent); filter: blur(80px); }
+
+  .app-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr 350px;
+    gap: 20px;
+    height: calc(100vh - 120px);
+    max-width: 1600px;
+    margin: 0 auto;
+    z-index: 1;
+    position: relative;
+  }
+}
+
+.glass {
+  background: rgba(201, 150, 150, 0.03);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+}
+
+// Sidebar Style
+.glass-sidebar {
+  @extend .glass;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+    background: linear-gradient(90deg, rgba(29, 185, 84, 0.15), rgba(0, 0, 0, 0.4));
+
+
+  .camera-box {
+    border-radius: 16px;
+    overflow: hidden;
+    background: #000;
+    aspect-ratio: 4/5;
+  }
+
+  .current-status {
+    text-align: center;
+    h2 { font-size: 2rem; text-transform: capitalize; margin-bottom: 10px; }
+    .happy { color: #10b981; }
+    .sad { color: #3b82f6; }
+    
+    .reset-btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      color: #94a3b8;
+      border: 1px solid rgba(255,255,255,0.1);
+      cursor: pointer;
+      transition: 0.3s;
+      &:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    }
+  }
+}
+
+// Main Content
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+    background: linear-gradient(90deg, rgba(29, 185, 84, 0.15), rgba(0, 0, 0, 0.4));
+
+
+  .hero-card {
+    padding: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+
+    .mood-title { font-size: 4rem; font-weight: 800; letter-spacing: -2px; }
+    .big-emoji { font-size: 5rem; }
+    
+    .progress-container {
+      width: 250px;
+      height: 6px;
+      background: rgba(50, 42, 42, 0.1);
+      border-radius: 10px;
+      margin-top: 15px;
+      .progress-bar { height: 100%; background: #10b981; border-radius: 10px; transition: 1s ease; }
+    }
+  }
+
+  .timeline-section {
+    flex: 1;
+    padding: 24px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    .timeline-scroll {
+      overflow-y: auto;
+      margin-top: 15px;
+      &::-webkit-scrollbar { width: 0; }
+    }
+
+    .timeline-row {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      .status-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; margin-right: 15px; }
+      .mood-name { flex: 1; font-weight: 500; }
+      .timestamp { color: #64748b; font-size: 0.9rem; }
+    }
+  }
+}
+
+// Song List
+.playlist-sidebar {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(90deg, rgba(29, 185, 84, 0.15), rgba(0, 0, 0, 0.4));
+
+  .song-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+  }
+
+  .song-card-modern {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    border-radius: 16px;
+    transition: 0.2s;
+    cursor: pointer;
+    &:hover { background: rgba(68, 58, 58, 0.365); transform: translateX(5px); }
+
+    .img-wrapper {
+      position: relative;
+      width: 50px;
+      height: 50px;
+      img { border-radius: 10px; width: 100%; height: 100%; object-fit: cover; }
+      .play-btn { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(0,0,0,0.4); opacity: 0; transition: 0.2s; border-radius: 10px; }
+    }
+    &:hover .play-btn { opacity: 1; }
+    
+    .song-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; }
+    .mood-tag { font-size: 0.75rem; background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 4px; color: #94a3b8; }
+  }
+}
+
+// Fixed Player
+.fixed-player {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;
+  max-width: 1200px;
+  z-index: 100;
+}
+.bottom-player-container {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 850px; // Zyada bada nahi, premium dikhne ke liye
+  z-index: 1000;
+
+  .glass-player-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    overflow: hidden;
+
+    .current-song-poster {
+      width: 120px;
+      height: 120px;
+      flex-shrink: 0;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+        box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+      }
+    }
+
+    .player-controls-section {
+      flex: 1;
+      padding-left: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .song-meta {
+        margin-bottom: 10px;
+        
+        .mood-badge {
+          font-size: 10px;
+          text-transform: uppercase;
+          background: rgba(59, 130, 246, 0.2);
+          color: #60a5fa;
+          padding: 2px 10px;
+          border-radius: 20px;
+          letter-spacing: 1px;
+        }
+
+        h3 {
+          font-size: 1.4rem;
+          margin: 5px 0 0px 0;
+          color: #fff;
+        }
+
+        p {
+          color: #94a3b8;
+          font-size: 0.9rem;
+        }
+      }
+
+      .actual-controls {
+        // Player controls ko horizontal align karne ke liye
+        width: 100%;
+        
+        // Agar aapka Player component default HTML controls use kar raha hai
+        audio {
+          width: 100%;
+          height: 35px;
+          filter: invert(1) hue-rotate(180deg); // Dark theme match karne ke liye
+        }
+      }
+    }
+  }
+}
+
+// Mobile responsive
+@media (max-width: 768px) {
+  .bottom-player-container {
+    width: 95%;
+    .current-song-poster { width: 80px; height: 80px; }
+    .song-meta h3 { font-size: 1rem; }
+  }
+}
