@@ -14,11 +14,17 @@ const Login = () => {
     const [ email, setEmail ] = useState("")
     const [ password, setPassword ] = useState("")
 
-    async function handleSubmit(e) {
-        e.preventDefault()
-        await handleLogin({ email, password })
-        navigate("/")
+   async function handleSubmit(e) {
+    e.preventDefault();
+
+    try {
+        await handleLogin({ email, password });
+        navigate("/"); 
+    } catch (err) {
+        console.log(err);
+        alert("Login failed"); 
     }
+}
 
     return (
         <main className="login-page">
