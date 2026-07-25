@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
-    origin: "https://moodify-seven-zeta.vercel.app/",
+    origin: "https://moodify-seven-zeta.vercel.app",
     credentials: true
 }))
 
