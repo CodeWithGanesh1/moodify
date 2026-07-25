@@ -7,14 +7,19 @@ app.use(express.json());
 app.use(cookieParser());
 
 // ISKO UPDATE KAREIN
+// app.use(cors({
+//     origin: [
+//         "https://moodify-se2x.vercel.app", 
+//         "https://moodify-seven-zeta.vercel.app",
+//         "http://localhost:5173" // Local testing ke liye bhi rakhein
+//     ],
+//     credentials: true
+// }));
+
 app.use(cors({
-    origin: [
-        "https://moodify-se2x.vercel.app", 
-        "https://moodify-seven-zeta.vercel.app",
-        "http://localhost:5173" // Local testing ke liye bhi rakhein
-    ],
+    origin: "http://localhost:5173",
     credentials: true
-}));
+}))
 
 /**
  * Routes

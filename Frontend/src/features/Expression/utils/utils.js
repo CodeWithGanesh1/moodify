@@ -23,8 +23,21 @@ export const init = async ({ landmarkerRef, videoRef, streamRef }) => {
     );
 
     streamRef.current = await navigator.mediaDevices.getUserMedia({ video: true });
+
+    if (!videoRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+        return;
+    }
+
     videoRef.current.srcObject = streamRef.current;
-    await videoRef.current.play();
+
+    try {
+        await videoRef.current.play();
+    } catch (err) {
+        if (err.name !== "AbortError") {
+            console.error("Video play error:", err);
+        }
+    }
 };
 
 export const detect = ({ landmarkerRef, videoRef, setExpression }) => {
